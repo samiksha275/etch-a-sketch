@@ -1,39 +1,46 @@
 let isActive = false;
-    const container = document.querySelector('.container');
+let pixDimension = 16;
+const container = document.querySelector('.container');
+eventListeners();
+createPixels();
 
-    function createPixels() {
-      const cols = Math.ceil(window.innerWidth / 16);
-      const rows = Math.ceil(window.innerHeight / 16);
+document.querySelector('.grid').addEventListener("click", () => {
+    container.innerHTML = '';
+    pixDimension = document.querySelector('.pix-dim').value && Number(document.querySelector('.pix-dim').value) < 20? parseInt(document.querySelector('.pix-dim').value) : 16;
+    isActive = false;
+    eventListeners();
+    createPixels();
+})
+function createPixels() {
+    const cols = Math.ceil(window.innerWidth / pixDimension);
+    const rows = Math.ceil(window.innerHeight / pixDimension);
 
-      //container.innerHTML = ''; // Clear existing pixels
-
-      for (let i = 0; i < rows * cols; i++) {
+    for (let i = 0; i < rows * cols; i++) {
         const pixel = document.createElement('div');
         pixel.classList.add('pixel');
+        pixel.style.height = `${pixDimension}px`;
+        pixel.style.width = `${pixDimension}px`;
         container.appendChild(pixel);
-      }
     }
+}
 
-    // Function that handles mouseenter event
-    function colorPixel(event) {
-      event.target.style.backgroundColor = 'black';
-    }
+function colorPixel(event) {
+    event.target.style.backgroundColor = 'black';
+}
 
-    // Add event listener for key press
+function eventListeners(){
     document.body.addEventListener("keydown", () => {
-      if (isActive === false) {
-        // Add the mouseenter event listener to all pixels
+        if (isActive === false) {
         document.querySelectorAll('.pixel').forEach((item) => {
-          item.addEventListener('mouseenter', colorPixel);
+            item.addEventListener('mouseenter', colorPixel);
         });
         isActive = true;
-      } else {
-        // Remove the mouseenter event listener from all pixels
+        } 
+        else {
         document.querySelectorAll('.pixel').forEach((item) => {
-          item.removeEventListener('mouseenter', colorPixel);
+            item.removeEventListener('mouseenter', colorPixel);
         });
         isActive = false;
-      }
+        }
     });
-
-    createPixels(); 
+}

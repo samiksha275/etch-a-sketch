@@ -6,6 +6,13 @@
 
 .pixel{
     background-color: grey;
-    height: 16px;
-    width: 16px;
+}
+
+.grid{
+    background-color: pink;
+    border: solid;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 17px;
+    border-radius: 6px;
 }
